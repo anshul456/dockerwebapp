@@ -16,7 +16,7 @@ pipeline {
     stage('Run Image') {
       steps{
         script {
-            docker.run("node-app")
+           docker.image('node-app').withRun('-d=true -p 8888:8080')
           }
         }
       }
