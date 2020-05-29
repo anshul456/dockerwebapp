@@ -1,12 +1,31 @@
-node {
-
-    checkout scm
-
-    docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
-
-        def customImage = docker.build("node-app")
-
-        /* Push the container to the custom Registry */
-        customImage.push()
+pipeline {
+  environment {
+    registry = "4639345/docker-node"
+    registryCredential = 'dockerHub'
+    dockerImage = ''
+  }
+  agent any
+  stages {
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
     }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+      stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
+  }
 }
