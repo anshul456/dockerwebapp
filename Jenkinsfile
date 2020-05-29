@@ -15,7 +15,7 @@ pipeline {
     }
     stage('Run Image') {
       steps{
-          sh "docker run -p 49160:8080 node-app"
+          sh "docker run --rm -p 49160:8080 node-app &"
         }
       }
   }
