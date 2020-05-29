@@ -13,11 +13,10 @@ pipeline {
         }
       }
     }
-    stage('Deploy Image') {
+    stage('Run Image') {
       steps{
         script {
-         sudo docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
+            docker.run("node-app")
           }
         }
       }
