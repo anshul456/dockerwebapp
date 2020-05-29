@@ -15,15 +15,8 @@ pipeline {
     }
     stage('Run Image') {
       steps{
-        script {
-           docker.image('node-app').withRun('-d=true -p 8888:8080')
-          }
+          sh "docker run -p 49160:8080 -d node-app"
         }
       }
-    stage('Remove Unused docker image') {
-      steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
-      }
-    }
   }
 }
