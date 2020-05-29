@@ -29,8 +29,8 @@ app.use(function(err, req, res, next) {
 });
 
 // Constants
-const PORT = 3000;
-const HOST = "localhost";
+const PORT = 8080;
+const HOST = "0.0.0.0";
 
 // App
 app.get('/', (req, res) => {
