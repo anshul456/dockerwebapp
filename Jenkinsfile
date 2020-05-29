@@ -1,20 +1,12 @@
-pipeline {
-  agent any
-    
-  tools {nodejs "node"}
-    
-  stages {
-        
-    stage('Install dependencies') {
-      steps {
-        sh 'npm install'
-      }
+node {
+
+    checkout scm
+
+    docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
+
+        def customImage = docker.build("node-app")
+
+        /* Push the container to the custom Registry */
+        customImage.push()
     }
-     
-    stage('Run') {
-      steps {
-         sh 'npm start'
-      }
-    }      
-  }
 }
