@@ -1,8 +1,16 @@
-node {
-    checkout scm
-    docker.withRegistery("https://registry.hub.docker.com","dockerHub") {
-    def customImage = docker.build("node-app")
-    customImage.push()
+
+
+pipeline {
+  agent any
+ 
+  tools {nodejs "node"}
+ 
+  stages {
+    stage('Example') {
+      steps {
+        sh 'npm config ls'
+      }
     }
+  }
 }
 
